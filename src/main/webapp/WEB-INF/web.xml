@@ -1,0 +1,38 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+	<display-name>XML Editor</display-name>
+    <servlet>
+        <servlet-name>XmlEditorApi</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+		    <param-name>jersey.config.server.provider.packages</param-name>
+		    <param-value>
+		    	io.swagger.jaxrs.listing,
+		        fr.haxweb.xmleditor.ws.rest
+		    </param-value>
+		</init-param>
+		<init-param>
+		    <param-name>jersey.config.server.provider.scanning.recursive</param-name>
+		    <param-value>false</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+    </servlet>
+    
+	<servlet>
+        <servlet-name>Jersey2Config</servlet-name>
+        <servlet-class>io.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
+        <init-param>
+            <param-name>api.version</param-name>
+            <param-value>1.0.0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>swagger.api.basepath</param-name>
+            <param-value>http://localhost:8080/xml-editor/api</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>XmlEditorApi</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+</web-app>
