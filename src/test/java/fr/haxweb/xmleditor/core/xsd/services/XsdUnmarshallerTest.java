@@ -1,3 +1,4 @@
+package fr.haxweb.xmleditor.core.xsd.services;
 import java.io.File;
 
 import org.apache.log4j.Logger;
@@ -19,7 +20,7 @@ public class XsdUnmarshallerTest {
 
 	@Test
 	public void test() {
-		Schema schema = XsdUnmarshaller.unmarshall(new File("src/test/resources/xhtml1-strict.xsd"));
+		Schema schema = XsdUnmarshaller.unmarshall("xhtml1-strict");
 		LOGGER.info(schema);
 		LOGGER.info("Other Attributes : " + schema.getOtherAttributes());
 		
