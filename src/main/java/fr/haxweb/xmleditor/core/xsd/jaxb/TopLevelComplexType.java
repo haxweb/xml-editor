@@ -12,6 +12,10 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import fr.haxweb.xmleditor.core.xsd.configurator.IConfigurableElement;
+import fr.haxweb.xmleditor.core.xsd.configurator.IConfigurableSchema;
+import fr.haxweb.xmleditor.core.xsd.configurator.ISchemaConfigurator;
+
 
 /**
  * <p>Java class for topLevelComplexType complex type.
@@ -38,8 +42,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "topLevelComplexType")
 public class TopLevelComplexType
-    extends ComplexType
+    extends ComplexType implements IConfigurableElement
 {
 
-
+	@Override
+	public void accept(IConfigurableSchema schema, ISchemaConfigurator configurator) {
+		configurator.configure(schema, this);
+	}
 }
