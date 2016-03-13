@@ -13,8 +13,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
 import fr.haxweb.xmleditor.core.xsd.configurator.IConfigurableElement;
-import fr.haxweb.xmleditor.core.xsd.configurator.IConfigurableSchema;
+import fr.haxweb.xmleditor.core.xsd.configurator.IElementPrinter;
+import fr.haxweb.xmleditor.core.xsd.configurator.IPrintableElement;
 import fr.haxweb.xmleditor.core.xsd.configurator.ISchemaConfigurator;
+import fr.haxweb.xmleditor.core.xsd.simple.SimpleSchema;
 
 
 /**
@@ -55,11 +57,16 @@ import fr.haxweb.xmleditor.core.xsd.configurator.ISchemaConfigurator;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "namedGroup")
 public class NamedGroup
-    extends RealGroup implements IConfigurableElement
+    extends RealGroup implements IConfigurableElement, IPrintableElement
 {
 
 	@Override
-	public void accept(IConfigurableSchema schema, ISchemaConfigurator configurator) {
+	public void accept(SimpleSchema schema, ISchemaConfigurator configurator) {
 		configurator.configure(schema, this);
+	}
+
+	@Override
+	public void accept(SimpleSchema simpleSchema, IElementPrinter printer) {
+		printer.print(simpleSchema, this);
 	}
 }
