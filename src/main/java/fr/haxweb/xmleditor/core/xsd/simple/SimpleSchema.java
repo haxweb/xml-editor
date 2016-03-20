@@ -84,15 +84,7 @@ public class SimpleSchema implements IConfigurableSchema {
 				return topElement;
 			}
 		}
-		resolveTopLevelElementsReferences();
 		return null;
-	}
-	
-	protected void resolveTopLevelElementsReferences() {
-		for (Entry<String, Element> topElementEntry : elements.entrySet()) {
-			String name = topElementEntry.getKey();
-			Element topElement = topElementEntry.getValue();
-		}
 	}
 	
 }
