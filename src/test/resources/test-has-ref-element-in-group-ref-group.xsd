@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.example.org/reference-finder-element/" targetNamespace="http://www.example.org/reference-finder-element/">
+
+    <element name="root-element">
+    	<complexType>
+	    	<sequence>
+	    		<group ref="root-group" />
+	    	</sequence>
+    	</complexType>
+    </element>
+    
+    <group name="root-group">
+    	<choice>
+    		<group ref="sub-group" />
+    	</choice>
+    </group>
+    
+    <group name="sub-group">
+    	<sequence>
+    		<element ref="sub-element" />
+    	</sequence>
+    </group>
+    
+    <element name="sub-element">
+    	
+    </element>
+    
+</schema>

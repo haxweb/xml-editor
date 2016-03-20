@@ -10,7 +10,7 @@ import junit.framework.Assert;
 
 public class XmlReaderTest {
 
-	public final static XmlReader reader = new XmlReader();
+	public final static XsdReader reader = new XsdReader();
 	
 	public final static Logger LOGGER = Logger.getLogger(XmlReaderTest.class);
 	

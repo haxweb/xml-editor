@@ -3,18 +3,23 @@ package fr.haxweb.xmleditor.core.xsd.services;
 import java.io.File;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.JAXBIntrospector;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.log4j.Logger;
 
 import fr.haxweb.xmleditor.core.xsd.jaxb.Schema;
+import fr.haxweb.xmleditor.core.xsd.simple.SimpleSchema;
 
 public class XsdUnmarshaller {
 
 	private static JAXBContext context;
 	
 	private static Unmarshaller unmarshaller;
+	
+	private static JAXBIntrospector introspector;
 	
 	public static final String XSD_EXTENSION = ".xsd";
 	
@@ -34,6 +39,13 @@ public class XsdUnmarshaller {
 		return unmarshaller;
 	}
 	
+	public static Object getElement(JAXBElement<?> element) {
+		if (introspector == null) {
+			introspector = getJaxbContext().createJAXBIntrospector();
+		}
+		return introspector.getValue(element);
+	}
+	
 	private static JAXBContext getJaxbContext() {
 		try {
 			if (context == null) {
@@ -46,9 +58,9 @@ public class XsdUnmarshaller {
 		return context;
 	}
 	
-	private static Schema unmarshall(File xsdFile) {
+	private static SimpleSchema unmarshall(File xsdFile) {
 		try {
-			return (Schema) getUnmarshaller().unmarshal(xsdFile);
+			return SimpleSchema.Builder.fromJaxbSchema((Schema)getUnmarshaller().unmarshal(xsdFile));
 		} catch (JAXBException e) {
 			System.out.println("Error trying to unmarshal " + xsdFile);
 			e.printStackTrace();
@@ -56,7 +68,7 @@ public class XsdUnmarshaller {
 		}
 	}
 	
-	public static Schema unmarshall(String xsdName) {
+	public static SimpleSchema unmarshall(String xsdName) {
 		return unmarshall(getXsdFile(xsdName));
 	}
 	

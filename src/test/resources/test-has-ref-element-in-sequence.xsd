@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.example.org/reference-finder-element/" targetNamespace="http://www.example.org/reference-finder-element/">
+
+    <element name="root-element">
+    	<complexType>
+    		<sequence>
+    			<element ref="sub-element" />
+    		</sequence>
+    	</complexType>
+    </element>
+    
+    <element name="sub-element">
+    	<complexType id="simple-type-test">
+    		<choice>
+    			<element type="string" name="A" />
+    			<element type="string" name="B" />
+    			<element type="string" name="C" />
+    		</choice>
+    	</complexType>
+    </element>
+    
+</schema>

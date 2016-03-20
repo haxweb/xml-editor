@@ -117,15 +117,20 @@ public class ElementPrinter implements IElementPrinter {
 	}
 
 	private void _printParticles(SimpleSchema schema, java.util.List<Object> particles) {
-		for (Object particle : particles) {
-			JAXBElement<?> particleElement = (JAXBElement<?>) particle;
-			print(schema, particleElement.getValue());
+		if (particles != null) {
+			for (Object particle : particles) {
+				JAXBElement<?> particleElement = (JAXBElement<?>) particle;
+				LOGGER.info("Particle : " + particleElement.getName() != null ? particleElement.getName() : "");
+				print(schema, particleElement.getValue());
+			}
 		}
 	}
 
 	public void print(SimpleSchema schema, ExplicitGroup explicitGroup) {
-		LOGGER.info("Explicit Group : " + explicitGroup.getName() != null ? explicitGroup.getName() : explicitGroup.getRef());
-		_printParticles(schema, explicitGroup.getParticle());
+		if (explicitGroup != null) {
+			LOGGER.info("Explicit Group : " + explicitGroup.getName() != null ? explicitGroup.getName() : explicitGroup.getRef());
+			_printParticles(schema, explicitGroup.getParticle());
+		}
 	}
 	
 	public void print(SimpleSchema schema, GroupRef groupRef) {
@@ -165,8 +170,9 @@ public class ElementPrinter implements IElementPrinter {
 	
 	@Override
 	public void print(SimpleSchema schema, TopLevelComplexType topLevelComplexType) {
-		// TODO Auto-generated method stub
-
+		LOGGER.info("Top Level ComplexType : " + topLevelComplexType.getName());
+		print(schema, topLevelComplexType.getChoice());
+		print(schema, topLevelComplexType.getSequence());
 	}
 
 	@Override

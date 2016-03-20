@@ -3,24 +3,20 @@ package fr.haxweb.xmleditor.core.xsd.simple;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.xml.namespace.QName;
 
 import org.apache.log4j.Logger;
-
-import com.fasterxml.jackson.databind.type.SimpleType;
 
 import fr.haxweb.xmleditor.core.xsd.configurator.ElementPrinter;
 import fr.haxweb.xmleditor.core.xsd.configurator.IConfigurableSchema;
 import fr.haxweb.xmleditor.core.xsd.configurator.IElementPrinter;
 import fr.haxweb.xmleditor.core.xsd.configurator.ISchemaConfigurator;
 import fr.haxweb.xmleditor.core.xsd.configurator.SchemaConfigurator;
-import fr.haxweb.xmleditor.core.xsd.jaxb.Attribute;
 import fr.haxweb.xmleditor.core.xsd.jaxb.AttributeGroup;
 import fr.haxweb.xmleditor.core.xsd.jaxb.Element;
 import fr.haxweb.xmleditor.core.xsd.jaxb.Group;
-import fr.haxweb.xmleditor.core.xsd.jaxb.NamedAttributeGroup;
-import fr.haxweb.xmleditor.core.xsd.jaxb.NamedGroup;
 import fr.haxweb.xmleditor.core.xsd.jaxb.OpenAttrs;
 import fr.haxweb.xmleditor.core.xsd.jaxb.Schema;
 import fr.haxweb.xmleditor.core.xsd.jaxb.TopLevelComplexType;
@@ -39,6 +35,8 @@ public class SimpleSchema implements IConfigurableSchema {
 	public Map<String, Group> 				groups;
 	
 	public List<QName> 						attributes;
+	
+	public boolean referencesResolved = false;
 	
 	public static class Builder {
 		
@@ -67,7 +65,7 @@ public class SimpleSchema implements IConfigurableSchema {
 			IElementPrinter printer = new ElementPrinter();
 			for (OpenAttrs element : this.jaxbSchema.getSimpleTypeOrComplexTypeOrGroup()) {
 				configurator.configure(this.schema, element);
-				printer.print(this.schema, element);
+//				printer.print(this.schema, element);
 			}
 		}
 
@@ -80,4 +78,21 @@ public class SimpleSchema implements IConfigurableSchema {
 		
 	}
 
+	public Element resolveRoot() {
+		for (Element topElement : this.elements.values()) {
+			if (!SchemaHelper.hasRef(this, topElement)) {
+				return topElement;
+			}
+		}
+		resolveTopLevelElementsReferences();
+		return null;
+	}
+	
+	protected void resolveTopLevelElementsReferences() {
+		for (Entry<String, Element> topElementEntry : elements.entrySet()) {
+			String name = topElementEntry.getKey();
+			Element topElement = topElementEntry.getValue();
+		}
+	}
+	
 }
