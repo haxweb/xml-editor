@@ -18,11 +18,18 @@ import fr.haxweb.xmleditor.core.xsd.simple.SchemaResolver;
 import fr.haxweb.xmleditor.core.xsd.simple.SimpleSchema;
 import io.swagger.annotations.Api;
 
-@Api("read")
-@Path("/read")
+@Api("xsd")
+@Path("/xsd")
 public class XsdReader {
 
 	public static Logger LOGGER = Logger.getLogger(XsdReader.class);
+	
+	@GET
+	@Path("/list")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response list() {
+		return Response.ok(XsdUnmarshaller.listXsds()).build();
+	}
 	
 	@GET
 	@Path("/{file}")

@@ -24,7 +24,7 @@ public class SchemaReferenceFinder {
 	 * @param schema
 	 * @param elementToFind
 	 * @param objectLookuped
-	 * @return
+	 * @return boolean whether or not there is a reference found in the given object
 	 */
 	public static boolean hasRef(SimpleSchema schema, Element elementToFind, Object objectLookuped) {
 		try {

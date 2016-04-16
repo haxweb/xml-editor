@@ -3,7 +3,6 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import fr.haxweb.xmleditor.core.xsd.jaxb.Element;
-import fr.haxweb.xmleditor.core.xsd.jaxb.Schema;
 import fr.haxweb.xmleditor.core.xsd.jaxb.SimpleType;
 import fr.haxweb.xmleditor.core.xsd.simple.SimpleSchema;
 import junit.framework.Assert;
@@ -13,7 +12,7 @@ public class XsdUnmarshallerTest {
 	public static final Logger LOGGER = Logger.getLogger(XsdUnmarshallerTest.class);
 
 	@Test
-	public void test() {
+	public void testUnmarshal() {
 		SimpleSchema simpleSchema = XsdUnmarshaller.unmarshall("xhtml1-strict");
 		
 		Assert.assertNotNull(simpleSchema);
@@ -29,11 +28,20 @@ public class XsdUnmarshallerTest {
 	}
 	
 	@Test
+	public void testListXsd() {
+		Assert.assertNotNull(XsdUnmarshaller.listXsds());
+	}
+	
+	@Test
 	public void testReferenceResolver() {
 		SimpleSchema simpleSchema = XsdUnmarshaller.unmarshall("xhtml1-strict");
 		Assert.assertNotNull(simpleSchema);
 		Assert.assertNotNull(simpleSchema.elements.get("html"));
-		LOGGER.info(simpleSchema.resolveRoot().getName());
+		
+		Element rootElement = simpleSchema.resolveRoot();
+		
+		LOGGER.info("Found root element : " + rootElement.getName());
+		Assert.assertEquals("html", rootElement.getName());
 	}
 
 }
